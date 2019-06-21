@@ -1,16 +1,19 @@
 package couchdb.service;
 
+import com.google.gson.JsonObject;
 import org.lightcouch.Document;
 
 public interface DbCouchService {
 
-    public String getVersion();
+     String getVersion();
 
-    public String create(Document doc);
+     String createDocument(Document doc);
 
-    public String update();
+     String updateDocument();
 
-    public String delete();
+     String deleteDocument();
+
+     JsonObject getDocumentById(String docId);
 
 
 }

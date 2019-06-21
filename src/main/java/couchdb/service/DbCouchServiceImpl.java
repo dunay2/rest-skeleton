@@ -1,5 +1,6 @@
 package couchdb.service;
 
+import com.google.gson.JsonObject;
 import couchdb.util.CouchConnector;
 import org.lightcouch.Document;
 
@@ -8,7 +9,7 @@ public class DbCouchServiceImpl implements DbCouchService {
 
     private CouchConnector couchConnector;
 
-    public  DbCouchServiceImpl() {
+    public DbCouchServiceImpl() {
 
         couchConnector = CouchConnector.getInstance();
     }
@@ -20,25 +21,29 @@ public class DbCouchServiceImpl implements DbCouchService {
     }
 
     @Override
-    public String create(Document doc) {
-        couchConnector.createDocument (doc);
+    public String createDocument(Document doc) {
+        couchConnector.createDocument(doc);
         return "document created";
     }
 
     @Override
-    public String update() {
+    public String updateDocument() {
 
         couchConnector.updateDocument();
 
         return "document created/update";
     }
 
-
     @Override
-    public String delete() {
+    public String deleteDocument() {
         return null;
     }
 
+    @Override
+    public JsonObject getDocumentById(String docId) {
+
+        return couchConnector.getDocumentById(docId);
+    }
 
 
     //  static <T> T getSilently(final String url, final String couchToken, final String path, final Class<T> type, final boolean logErrorMessages) {

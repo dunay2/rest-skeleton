@@ -25,3 +25,7 @@ c
 3src/main/java/person/entrypoint/UserEntryPoint.java,5\5\55fa5af83e7f9e994d9ee6b1707411abf0e9f6e2
 Z
 *src/main/java/couchdb/controller/Ping.java,2\6\2681afa854d7a6877ac63f8db3a5bea304a0f905
+a
+1src/main/java/couchdb/service/DbCouchService.java,b\5\b5f40f5924ea0b881f1d968a7ad01a6ccca31889
+o
+?src/main/java/couchdb/responseModel/ObjectNotFountTemplate.java,7\0\7035293c870a966df932697863ecb5cf71a97acc
