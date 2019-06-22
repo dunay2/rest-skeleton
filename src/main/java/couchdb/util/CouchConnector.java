@@ -3,6 +3,7 @@ package couchdb.util;
 
 import org.lightcouch.CouchDbClient;
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
 import java.util.List;
 
@@ -31,13 +32,11 @@ public class CouchConnector {
         return dbClient.context().getAllDbs();
     }
 
-    public String updateDocument() {
-        return "Document updated";
-
+    public Response updateDocument(Document doc) {
+        return dbClient.update(doc);
     }
 
     public String createDocument(Document doc) {
-
         boolean found = false;
         byte retries = 0;
 

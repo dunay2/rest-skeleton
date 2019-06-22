@@ -1,6 +1,7 @@
 package couchdb.service;
 
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
 public interface DbCouchService {
 
@@ -8,7 +9,7 @@ public interface DbCouchService {
 
     public String create(Document doc);
 
-    public String update();
+    public Response update(Document doc);
 
     public String delete();
 

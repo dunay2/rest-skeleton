@@ -2,20 +2,18 @@ package couchdb.service;
 
 import couchdb.util.CouchConnector;
 import org.lightcouch.Document;
-
+import org.lightcouch.Response;
 
 public class DbCouchServiceImpl implements DbCouchService {
 
     private CouchConnector couchConnector;
 
     public  DbCouchServiceImpl() {
-
         couchConnector = CouchConnector.getInstance();
     }
 
     @Override
     public String getVersion() {
-
         return couchConnector.getVersion();
     }
 
@@ -26,20 +24,14 @@ public class DbCouchServiceImpl implements DbCouchService {
     }
 
     @Override
-    public String update() {
-
-        couchConnector.updateDocument();
-
-        return "document created/update";
+    public Response update(Document doc) {
+        return  couchConnector.updateDocument(doc);
     }
-
 
     @Override
     public String delete() {
         return null;
     }
-
-
 
     //  static <T> T getSilently(final String url, final String couchToken, final String path, final Class<T> type, final boolean logErrorMessages) {
 //        try {

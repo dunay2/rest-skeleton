@@ -1,13 +1,13 @@
 package service;
 
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
 public interface DocumentService {
 
     void delete();
-    void update();
+    Response update(Document doc);
     void create(Document doc);
     String getId();
     String getVersion();
-
 }
