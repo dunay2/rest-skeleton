@@ -4,7 +4,6 @@ import couchdb.service.DbCouchService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-
 @Path("/web-resources")
 public class Ping {
 
@@ -13,5 +12,4 @@ public class Ping {
         DbCouchService dbService = new DbCouchServiceImpl();
         return dbService.getVersion();
     }
-
 }

@@ -2,44 +2,41 @@ package couchdb.service;
 
 import couchdb.util.CouchConnector;
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
-
-public class DbCouchServiceImpl implements DbCouchService {
+public class DbCouchServiceImpl<E> implements DbCouchService {
 
     private CouchConnector couchConnector;
 
-    public  DbCouchServiceImpl() {
-
+    public DbCouchServiceImpl() {
         couchConnector = CouchConnector.getInstance();
     }
 
     @Override
     public String getVersion() {
-
         return couchConnector.getVersion();
     }
 
     @Override
     public String create(Document doc) {
-        couchConnector.createDocument (doc);
+        couchConnector.createDocument(doc);
         return "document created";
     }
 
     @Override
-    public String update() {
-
-        couchConnector.updateDocument();
-
-        return "document created/update";
+    public Response update(Document doc) {
+        return couchConnector.updateDocument(doc);
     }
-
 
     @Override
     public String delete() {
         return null;
     }
 
-
+    @Override
+    public Object find(Class supplier, String id) {
+        return couchConnector.find(supplier, id);
+    }
 
     //  static <T> T getSilently(final String url, final String couchToken, final String path, final Class<T> type, final boolean logErrorMessages) {
 //        try {
@@ -162,7 +159,6 @@ public class DbCouchServiceImpl implements DbCouchService {
 //
 //        return result;
 //    }
-
 
     public static interface DbPingService {
     }
