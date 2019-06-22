@@ -8,11 +8,7 @@ import person.requestModel.CreatePersonRequestModel;
 import person.requestModel.UpdatePersonRequestModel;
 import person.service.PersonServiceImpl;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/web-operations")
@@ -22,6 +18,12 @@ public class UserEntryPoint {
     private PersonServiceImpl person;
     @Autowired
     private PersonDTO personDTO;
+
+    @GET
+    @Path("/get/{id}")
+    public String update(@PathParam("id")String id ) {
+        return person.find(id).toString();
+    }
 
     @PUT
     @Path("/update")
@@ -40,7 +42,6 @@ public class UserEntryPoint {
         //check invalid entries as documents with no commas
         BeanUtils.copyProperties(requestObject, personDTO);
         person.create(personDTO);
-
         return "created";
     }
 }

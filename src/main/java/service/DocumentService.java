@@ -8,6 +8,6 @@ public interface DocumentService {
     void delete();
     Response update(Document doc);
     void create(Document doc);
-    String getId();
-    String getVersion();
+    Document find(String id);
+
 }

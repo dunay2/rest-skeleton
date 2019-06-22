@@ -1,20 +1,16 @@
 package couchdb.util;
 
-
 import org.lightcouch.CouchDbClient;
 import org.lightcouch.Document;
 import org.lightcouch.Response;
-
 import java.util.List;
+import java.util.function.Supplier;
 
-
-
-
-public class CouchConnector {
+public class CouchConnector<E> {
 
     private static CouchDbClient dbClient;
     private static CouchConnector instance;
-
+    private Supplier<E> supplier;
 
     public static synchronized CouchConnector getInstance(){
         if(instance == null){
@@ -36,8 +32,9 @@ public class CouchConnector {
         return dbClient.update(doc);
     }
 
-    public String createDocument(Document doc) {
+    public Response createDocument(Document doc) {
         boolean found = false;
+        Response response=null;
         byte retries = 0;
 
         while (retries < 3 && !found) {
@@ -45,32 +42,16 @@ public class CouchConnector {
             found = dbClient.contains(id);
             if (!found) {
                 doc.setId(id);
-                dbClient.save(doc);
+                response=dbClient.save(doc);
                 found = true;
             }
             retries++;
         }
+        return response;
+    }
 
-        //Response response = dbClient.save(foo);
-
-        //dbClient.update(foo);
-
-        //Map<String, Object> map = new HashMap<>();
-        //map.put("_id", "doc-id");
-        //map.put("title", "value");
-        //dbClient.save(map);
-
-        // dbClient.shutdown();
-
-        //JsonObject json = new JsonObject();
-        //json.addProperty("_id", "doc-id");
-        //json.add("array", new JsonArray());
-        //dbClient.save(json);
-
-        //String jsonstr = "{\"title\":\"val\"}";
-        //JsonObject jsonobj = dbClient.getGson().fromJson(jsonstr, JsonObject.class);
-        //dbClient.save(jsonobj);
-        return "saved";
+    public Object find(Class<E> supplier, String id) {
+        return dbClient.find(supplier, id);
     }
 
   //  public String deleteDocument(E entity, String path, String revision) {
@@ -85,10 +66,6 @@ public class CouchConnector {
         //}
     //    return "not implmemented";
     //}
-
-    public String getDocument() {
-        return "not implmemented";
-    }
 
 
 //    public  Integer getDatabaseNumberOfDocuments(final String databaseName, final String extraParameter) {

@@ -28,13 +28,7 @@ public class PersonServiceImpl implements DocumentService {
     }
 
     @Override
-    public String getId() {
-        return null;
-    }
-
-    @Override
-    public String getVersion() {
-        Document person = new PersonDTO();
-        return person.getId();
+    public Document find(String id) {
+        return (Document) dbService.find(PersonDTO.class,id);
     }
 }

@@ -2,7 +2,7 @@ package couchdb.util;
 
 import java.security.SecureRandom;
 
-public class RandomUtil {
+public final class RandomUtil {
     // Maxim: Copied from UUID implementation :)
     private static volatile SecureRandom numberGenerator = null;
     private static final long MSB = 0x8000000000000000L;
