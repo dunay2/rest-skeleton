@@ -3,17 +3,21 @@ package couchdb.util;
 import com.google.gson.JsonObject;
 import org.lightcouch.CouchDbClient;
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 import org.lightcouch.NoDocumentException;
 
 import java.util.List;
+import java.util.function.Supplier;
+
+public class CouchConnector<E> {
 
 //import org.jboss.resteasy.client.ClientRequest;
 //http://www.lightcouch.org/lightcouch-guide.html
 
-public class CouchConnector {
 
     private static CouchDbClient dbClient;
     private static CouchConnector instance;
+    private Supplier<E> supplier;
     private static final String COUCH_CONFIG_FILE = "couchdb.properties";
 
     public static synchronized CouchConnector getInstance() {
@@ -36,13 +40,13 @@ public class CouchConnector {
         return dbClient.context().getAllDbs();
     }
 
-    public String updateDocument() {
-        return "Document updated";
+    public Response updateDocument(Document doc) {
+        return dbClient.update(doc);
     }
 
-    public String createDocument(Document doc) {
-
+    public Response createDocument(Document doc) {
         boolean found = false;
+        Response response=null;
         byte retries = 0;
 
         while (retries < 3 && !found) {
@@ -50,6 +54,7 @@ public class CouchConnector {
             found = dbClient.contains(id);
             if (!found) {
                 doc.setId(id);
+                response=dbClient.save(doc);
                 dbClient.save(doc);
                 //https://www.programcreek.com/java-api-examples/?api=org.lightcouch.Response
                 //eliminar conflicto
@@ -71,27 +76,11 @@ public class CouchConnector {
             }
             retries++;
         }
+        return response;
+    }
 
-        //Response response = dbClient.save(foo);
-
-        //dbClient.update(foo);
-
-        //Map<String, Object> map = new HashMap<>();
-        //map.put("_id", "doc-id");
-        //map.put("title", "value");
-        //dbClient.save(map);
-
-        // dbClient.shutdown();
-
-        //JsonObject json = new JsonObject();
-        //json.addProperty("_id", "doc-id");
-        //json.add("array", new JsonArray());
-        //dbClient.save(json);
-
-        //String jsonstr = "{\"title\":\"val\"}";
-        //JsonObject jsonobj = dbClient.getGson().fromJson(jsonstr, JsonObject.class);
-        //dbClient.save(jsonobj);
-        return "saved";
+    public Object find(Class<E> supplier, String id) {
+        return dbClient.find(supplier, id);
     }
 
     //  public String deleteDocument(E entity, String path, String revision) {

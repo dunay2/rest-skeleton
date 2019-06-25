@@ -1,20 +1,14 @@
-package person.dto;
+package employee.requestModel;
 
-import com.auth0.jwt.internal.com.fasterxml.jackson.annotation.JsonInclude;
-import org.lightcouch.Document;
 
-//import javax.inject.Singleton;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class PersonDTO extends Document {
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
+public class CreateEmployeeRequestModel {
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-
-    public PersonDTO() {
-    }
 
     public String getFirstName() {
         return firstName;

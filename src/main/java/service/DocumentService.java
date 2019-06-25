@@ -1,15 +1,14 @@
 package service;
 
-import com.google.gson.JsonObject;
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
 public interface DocumentService {
 
+    Response update(Document doc);
     void delete(String docId);
-
-    void update(Document doc);
-
+    public Response update(Document doc);
     void create(Document doc);
+    Document find(String id);
 
-    JsonObject getById(String docId);
 }

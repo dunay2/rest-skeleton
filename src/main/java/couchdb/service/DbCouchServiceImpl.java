@@ -1,50 +1,42 @@
 package couchdb.service;
 
-import com.google.gson.JsonObject;
 import couchdb.util.CouchConnector;
 import org.lightcouch.Document;
+import org.lightcouch.Response;
 
-
-public class DbCouchServiceImpl implements DbCouchService {
+public class DbCouchServiceImpl<E> implements DbCouchService {
 
     private CouchConnector couchConnector;
 
     public DbCouchServiceImpl() {
-
         couchConnector = CouchConnector.getInstance();
     }
 
     @Override
     public String getVersion() {
-
         return couchConnector.getVersion();
     }
 
     @Override
-    public String createDocument(Document doc) {
+    public String create(Document doc) {
         couchConnector.createDocument(doc);
         return "document created";
     }
 
     @Override
-    public String updateDocument() {
-
-        couchConnector.updateDocument();
-
-        return "document created/update";
+    public Response update(Document doc) {
+        return couchConnector.updateDocument(doc);
     }
 
     @Override
-    public String deleteDocument() {
+    public String delete() {
         return null;
     }
 
     @Override
-    public JsonObject getDocumentById(String docId) {
-
-        return couchConnector.getDocumentById(docId);
+    public Object find(Class supplier, String id) {
+        return couchConnector.find(supplier, id);
     }
-
 
     //  static <T> T getSilently(final String url, final String couchToken, final String path, final Class<T> type, final boolean logErrorMessages) {
 //        try {
@@ -167,7 +159,6 @@ public class DbCouchServiceImpl implements DbCouchService {
 //
 //        return result;
 //    }
-
 
     public static interface DbPingService {
     }
